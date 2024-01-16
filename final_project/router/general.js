@@ -37,7 +37,7 @@ public_users.get("/server/asynbooks", async function (req,res) {
       return res.status(500).json({message: "Error listing books"});
     }
   });
-// book details promises
+// book details promises isbn
   public_users.get("/server/asynbooks/isbn/:isbn", function (req,res) {
     let {isbn} = req.params;
     axios.get(`http://localhost:5000/isbn/${isbn}`)
@@ -61,6 +61,20 @@ public_users.get("/server/asynbooks", async function (req,res) {
     .catch(function(error){
         console.log(error);
         return res.status(500).json({message: "Error fetching book details."})
+    })
+  });
+
+  // promises details by author
+  public_users.get("/server/asynbooks/author/:author", function (req,res) {
+    let {author} = req.params;
+    axios.get(`http://localhost:5000/author/${author}`)
+    .then(function(response){
+      console.log(response.data);
+      return res.status(200).json(response.data);
+    })
+    .catch(function(error){
+        console.log(error);
+        return res.status(500).json({message: "Error fetching book by author."})
     })
   });
   
